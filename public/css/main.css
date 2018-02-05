@@ -1,0 +1,90 @@
+textarea {
+  resize: none;
+}
+
+.section-ad {
+  background: #666666;
+  color: white;
+  padding: 8px 20px;
+}
+
+.paddborder {
+  padding: 20px;
+  border: 1px solid grey;
+}
+
+.card-ad {
+  background: white;
+  border: 1px solid rgb(185, 185, 185);
+  padding: 20px;
+}
+
+.contain-img-ad {
+  background: #eee;
+  padding: 5px;
+}
+
+.contain-pseudo-ad {
+  padding: 5px;
+  border: 1px solid #eee;
+}
+
+.contain-city-price {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #eee;
+  padding: 5px;
+  width: 100%;
+}
+
+.title-city-price {
+  background: #eee;
+  width: 30%;
+  padding: 5px;
+}
+
+.value-city-price {
+  width: 70%;
+  text-indent: 30px;
+  padding: 5px;
+}
+
+.contain-pseudo {
+  background: #eee;
+  padding: 5px;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.contain-pseudo-tel {
+  border: 1px solid #eee;
+}
+
+.padding-10 {
+  padding: 10px;
+}
+
+.contain-all-ad {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #eee;
+}
+
+.contain-image-ad {
+  background: #eee;
+  padding: 10px;
+  width: 150px;
+  text-align: center;
+  margin-right: 2em;
+}
+
+.image-ad {
+  width: 120px;
+  object-fit: cover;
+  height: 150px;
+}
