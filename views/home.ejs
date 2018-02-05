@@ -12,19 +12,22 @@
 </head>
 
 <body>
+  <$- include partials/navbar.ejs $>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12">
+      <$  ads.map(ad => { $>
         <div class="contain-all-ad">
           <div class="contain-image-ad">
-            <img class="image-ad" src="https://img3.leboncoin.fr/ad-image/d93e5ea126e72b9ee2e846ee39de16d7c011f4f6.jpg" alt="">
+            <img class="image-ad" src='/uploads/<$=ad.photo$>' alt="photo">
           </div>
           <div>
-            <h4>DVD: Documentaires</h4>
-            <p>Paris 10eme</p>
-            <p>1 €</p>
+            <a href="/annonce/<$= ad.id$>"><h4 class="h4-title"><$= ad.title $></h4></a>
+            <p class="p-city"><$= ad.city$></p>
+            <p class="p-price"><$= ad.price $>€</p>
           </div>
         </div>
+        <$ }); $>
       </div>
     </div>
   </div>
