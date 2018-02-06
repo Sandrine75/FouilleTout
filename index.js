@@ -120,7 +120,6 @@ app.post('/modifier/:id', upload.single("photo_url"), function(req, res) {
   var title = req.body.title_ad;
   var textarea = req.body.textarea_ad;
   var price = req.body.price_ad;
-  var photo = req.file.filename;
   var city = req.body.city_ad;
   var pseudo = req.body.pseudo_ad;
   var email = req.body.email_ad;
@@ -130,17 +129,28 @@ app.post('/modifier/:id', upload.single("photo_url"), function(req, res) {
     title: title,
     textarea: textarea,
     price: price,
-    photo: photo,
     city: city,
     pseudo: pseudo,
     email: email,
     tel: tel,
-    _id: req.params.id
   }
+
+  if (req.file) {
+    productModify.photo = req.file.filename;
+  }
+
   Product.findOneAndUpdate({_id: req.params.id}, productModify, function(err, product) {
     if (!err) {
-      console.log(product)
       res.redirect(`/annonce/${req.params.id}`);
+    }
+  });
+});
+
+
+app.get('/supprimer/:id', function(req, res) {
+  Product.deleteOne({ _id: req.params.id }, function (err) {
+    if (!err) {
+      res.redirect('/');
     }
   });
 });
