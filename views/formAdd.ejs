@@ -8,57 +8,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
 </head>
 
 <body>
   <$- include partials/navbar.ejs $>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <form action="/deposer" method="POST" enctype="multipart/form-data">
-          <div class="section-ad">
-            <h4>Votre annonce</h4>
-          </div>
-          <div class="form-group paddborder">
-            <label for="title_ad">Titre de l'annonce</label>
-            <input type="text" name="title_ad" id="title_ad" class="form-control">
-            <label for="textarea_ad">Texte de l'annonce</label>
-            <textarea name="textarea_ad" id="textarea_ad" class="form-control"></textarea>
-            <label for="price_ad">Prix</label>
-            <input type="number" name="price_ad" id="price_ad" class="form-control">
-            <label for="photo_url">Photo</label>
-            <input type="file" name="photo_url" id="photo_url" class="form-control">
-          </div>
-          <div class="section-ad">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <form action="/deposer" method="POST" enctype="multipart/form-data">
+            <div class="section-ad">
+              <h4>Votre annonce</h4>
+            </div>
+            <div class="form-group paddborder">
+              <label><b>Vous êtes un</b></label>
+              <div class="input-radio">
+                <div class="contain-input-radio">
+                  <input type="radio" class="form-control" id="type_user1" name="type_user" value="Particulier" checked>
+                  <label class="margin-left-right-20" for="type_user1">Particulier</label>
+                </div>
+                <div class="contain-input-radio">
+                  <input type="radio" class="form-control" name="type_user" id="type_user2" value="Professionel">
+                  <label class="margin-left-right-20" for="type_user2">Professionel</label>
+                </div>
+              </div>
+              <div class="informations-droits">
+                <p>
+                  Si vous agissez à titre professionnel, vous devez créer un Compte professionnel. A défaut, en application de l’article L 132-2 du Code de la consommation qui sanctionne les pratiques commerciales trompeuses, vous encourez notamment une peine d’emprisonnement de 2 ans et une amende de 300 000 euros. Pour plus d'informations, <a href="https://www2.leboncoin.fr/dc/vos_droits_et_obligations?ca=12_s">consultez vos droits et obligations</a>.
+                </p>
+              </div>
+              <label><b>Type d'annonce</b></label>
+              <div class="input-radio">
+                  <div class="contain-input-radio">
+                    <input type="radio" class="form-control" id="type_ad1" name="type_ad" value="Offres" checked>
+                    <label class="margin-left-right-20" for="type_ad1">Offres</label>
+                  </div>
+                  <div class="contain-input-radio">
+                    <input type="radio" class="form-control" name="type_ad" id="type_ad2" value="Demandes">
+                    <label class="margin-left-right-20" for="type_ad2">Demandes</label>
+                  </div>
+                </div>
+              <label for="title_ad"><b>Titre de l'annonce</b></label>
+              <input type="text" name="title_ad" id="title_ad" class="form-control" required>
+              <label for="textarea_ad"><b>Texte de l'annonce</b></label>
+              <textarea name="textarea_ad" id="textarea_ad" class="form-control" required></textarea>
+              <label for="price_ad"><b>Prix</b></label>
+              <input type="number" name="price_ad" id="price_ad" class="form-control" required>
+              <label for="photo_url"><b>Photo</b></label>
+              <input type="file" name="photo_url" id="photo_url" class="form-control">
+            </div>
+            <div class="section-ad">
               <h4>Localisation</h4>
-          </div>
-          <div class="form-group paddborder">
-            <label for="city_ad">Ville ou code postal</label>
-            <input type="text" name="city_ad" id="city_ad" class="form-control">
-          </div>
-          <div class="section-ad">
+            </div>
+            <div class="form-group paddborder">
+              <label for="city_ad"><b>Ville ou code postal</b></label>
+              <input type="text" name="city_ad" id="city_ad" class="form-control" required>
+            </div>
+            <div class="section-ad">
               <h4>Vos informations</h4>
             </div>
-          <div class="form-group paddborder">
-            <label for="pseudo_ad">Pseudo</label>
-            <input type="text" name="pseudo_ad" id="pseudo_ad" class="form-control">
-            <label for="email_ad">Email</label>
-            <input type="email" name="email_ad" id="email_ad" class="form-control">
-            <label for="phone_ad">Téléphone</label>
-            <input type="tel" name="phone_ad" id="phone_ad" class="form-control">
-          </div>
-          <button class="btn btn-primary" type="submit">Valider</button>
-        </form>
+            <div class="form-group paddborder">
+              <label for="pseudo_ad"><b>Pseudo</b></label>
+              <input type="text" name="pseudo_ad" id="pseudo_ad" class="form-control" required>
+              <label for="email_ad"><b>Email</b></label>
+              <input type="email" name="email_ad" id="email_ad" class="form-control" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required>
+              <label for="phone_ad"><b>Téléphone</b></label>
+              <input type="tel" name="phone_ad" id="phone_ad" class="form-control" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Valider</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
 </body>
 
 </html>

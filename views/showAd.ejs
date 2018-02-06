@@ -21,7 +21,8 @@
               <$=product.title $>
             </h3>
             <div class="contain-img-ad">
-              <img src="/uploads/<$=product.photo$>" alt="image" class="photo-show">
+              <img src="/uploads/<$=product.photo$>" alt="image" class="photo-show" style="position: absolute;z-index: 0;">
+              <img src="<$= product.photo $>" alt="photo" class="photo-show" style="z-index:2;position: relative;">
             </div>
             <div class="contain-pseudo-ad">
               <h4>
@@ -60,11 +61,8 @@
               <p id="tel-ad">
                 <button class="btn click-button">Voir le numéro</button>
               </p>
-              <$ if (alreadyFav) { $>
                 <button class="btn btn-primary" style="pointer-events: none">Ajouté a vos favoris</button>
-             <$ } else { $>
               <button class="btn btn-primary" id="add-favor">Mettre en favoris</button>
-             <$}$>
              <a href="/modifier/<$= product._id $>"><button class="btn btn-secondary">Modifier</button></a>
              <a href="/supprimer/<$= product._id $>"><button class="btn btn-secondary">Supprimer</button></a>
             </div>
@@ -80,7 +78,7 @@
       crossorigin="anonymous"></script>
     <script>
       $('.click-button').click(function () {
-        $('#tel-ad').html('<a href="tel:<$=product.tel $>"><$=product.tel $></a>');
+        $('#tel-ad').html('<a href="tel:<$=product.tel.replace(" ", "") $>"><$=product.tel $></a>');
       });
       $('#add-favor').click(function () {
         $(this).text('Ajouté a vos favoris');
