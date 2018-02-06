@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
 var ads = [];
-
+var favors = [];
 
 app.get("/", function(req, res) {
   res.render('home', {
@@ -51,6 +51,24 @@ app.post('/deposer', upload.single("photo_url"), function(req, res) {
   res.redirect(`/annonce/${id}`);
 })
 
+app.post('/add-favor', function(req, res) {
+  var idNumber = Number(req.body.id);
+  if (favors[idNumber]) {
+    if (favors[idNumber].id !== idNumber) {
+      favors.push(ads[idNumber])
+    }
+  } else {
+    favors.push(ads[idNumber]);
+  }
+   res.send('si ya pas de if');
+});
+
+app.get('/mes-favoris', function(req, res) {
+  res.render('favoris', {
+    favors: favors
+  })
+});
+
 app.get('/annonce/:id', function(req, res){
   var ad = ads[req.params.id];
   var title = ad.title;
@@ -61,7 +79,12 @@ app.get('/annonce/:id', function(req, res){
   var pseudo = ad.pseudo;
   var email = ad.email;
   var tel = ad.tel;
-
+  var isFavors;
+  if (favors[req.params.id]) {
+    isFavors = true;
+  } else {
+    isFavors = false;
+  }
   res.render('showAd', {
     title: title,
     textarea: textarea,
@@ -70,7 +93,8 @@ app.get('/annonce/:id', function(req, res){
     city: city,
     pseudo: pseudo,
     email: email,
-    tel: tel
+    tel: tel,
+    alreadyFav: isFavors
   });
 });
 

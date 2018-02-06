@@ -128,7 +128,7 @@ textarea {
 .photo-show {
   width: 100%;
   height: 500px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .h4-title {
@@ -161,4 +161,8 @@ textarea {
   align-items: center;
   height: 50px;
   margin: 0;
+}
+
+.link-navbar:hover {
+  color: white;
 }

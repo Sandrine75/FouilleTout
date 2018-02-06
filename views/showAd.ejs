@@ -57,13 +57,20 @@
               </h4>
             </div>
             <div class="text-center padding-10">
-                <p id="tel-ad"><button class="btn click-button">Voir le numéro</button></p>
+              <p id="tel-ad">
+                <button class="btn click-button">Voir le numéro</button>
+              </p>
+              <$ if (alreadyFav) { $>
+                <button class="btn btn-primary" style="pointer-events: none">Ajouté a vos favoris</button>
+             <$ } else { $>
+              <button class="btn btn-primary" id="add-favor">Mettre en favoris</button>
+             <$}$>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"></script>
@@ -72,6 +79,17 @@
     <script>
       $('.click-button').click(function () {
         $('#tel-ad').html('<a href="tel:<$= tel $>"><$= tel $></a>');
+      });
+      $('#add-favor').click(function () {
+        $(this).text('Ajouté a vos favoris');
+        $.post(
+          "/add-favor", {
+            id: location.pathname.replace("/annonce/", "")
+          },
+          function (data) {
+            console.log(data);
+          }
+        )
       });
     </script>
 </body>
