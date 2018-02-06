@@ -16,13 +16,13 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12">
-      <$  ads.map(ad => { $>
+      <$  products.map(ad => { $>
         <div class="contain-all-ad">
           <div class="contain-image-ad">
             <img class="image-ad" src='/uploads/<$=ad.photo$>' alt="photo">
           </div>
           <div>
-            <a href="/annonce/<$= ad.id$>"><h4 class="h4-title"><$= ad.title $></h4></a>
+            <a href="/annonce/<$= ad._id$>"><h4 class="h4-title"><$= ad.title $></h4></a>
             <p class="p-city"><$= ad.city$></p>
             <p class="p-price"><$= ad.price $>€</p>
           </div>

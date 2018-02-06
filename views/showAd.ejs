@@ -18,25 +18,25 @@
         <div class="col-xs-12 col-md-8">
           <div class="card-ad">
             <h3>
-              <$=title $>
+              <$=product.title $>
             </h3>
             <div class="contain-img-ad">
-              <img src="/uploads/<$=photo$>" alt="image" class="photo-show">
+              <img src="/uploads/<$=product.photo$>" alt="image" class="photo-show">
             </div>
             <div class="contain-pseudo-ad">
               <h4>
-                <$=pseudo $>
+                <$=product.pseudo $>
               </h4>
             </div>
             <div class="contain-city-price">
               <span class="title-city-price">Prix</span>
               <span class="value-city-price">
-                <$=price $>€</span>
+                <$=product.price $>€</span>
             </div>
             <div class="contain-city-price">
               <span class="title-city-price">Ville</span>
               <span class="value-city-price">
-                <$=city $>
+                <$=product.city $>
               </span>
             </div>
             <div>
@@ -44,7 +44,7 @@
                 Description:
                 <br>
                 <br>
-                <$=textarea $>
+                <$=product.textarea $>
               </p>
             </div>
           </div>
@@ -53,7 +53,7 @@
           <div class="contain-pseudo-tel">
             <div class="contain-pseudo">
               <h4>
-                <$=pseudo $>
+                <$=product.pseudo $>
               </h4>
             </div>
             <div class="text-center padding-10">
@@ -78,7 +78,7 @@
       crossorigin="anonymous"></script>
     <script>
       $('.click-button').click(function () {
-        $('#tel-ad').html('<a href="tel:<$= tel $>"><$= tel $></a>');
+        $('#tel-ad').html('<a href="tel:<$=product.tel $>"><$=product.tel $></a>');
       });
       $('#add-favor').click(function () {
         $(this).text('Ajouté a vos favoris');

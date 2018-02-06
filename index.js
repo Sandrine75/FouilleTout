@@ -1,13 +1,30 @@
 var express = require('express');
 var bodyParser = require("body-parser");
 var multer = require("multer");
+var mongoose = require("mongoose");
 var upload = multer({ dest: "public/uploads/" });
 
+// EJS
 var ejs = require('ejs');
 ejs.delimiter = '$';
 
 var app = express();
 
+// MongoDB
+mongoose.connect("mongodb://localhost:27017/leboncoin");
+var productSchema = new mongoose.Schema({
+  title: String,
+  textarea: String,
+  price: Number,
+  photo: String,
+  city: String,
+  pseudo: String,
+  email: String,
+  tel: String
+});
+var Product = mongoose.model("Product", productSchema);
+
+// Express
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
@@ -16,8 +33,10 @@ var ads = [];
 var favors = [];
 
 app.get("/", function(req, res) {
-  res.render('home', {
-    ads: ads
+  Product.find({}, function(err, product) {
+    res.render('home', {
+      products: product // [{}, {}]
+    });
   });
 });
 
@@ -34,9 +53,8 @@ app.post('/deposer', upload.single("photo_url"), function(req, res) {
   var pseudo = req.body.pseudo_ad;
   var email = req.body.email_ad;
   var tel = req.body.phone_ad;
-  var id = ads.length;
 
-  var ad = {
+  var ad = new Product({
     title: title,
     textarea: textarea,
     price: price,
@@ -44,11 +62,14 @@ app.post('/deposer', upload.single("photo_url"), function(req, res) {
     city: city,
     pseudo: pseudo,
     email: email,
-    tel: tel,
-    id: id
-  }
-  ads.push(ad);
-  res.redirect(`/annonce/${id}`);
+    tel: tel
+  });
+
+  ad.save(function(err, obj){
+    if (!err) {
+      res.redirect("/");
+    }
+  });
 })
 
 app.post('/add-favor', function(req, res) {
@@ -70,22 +91,42 @@ app.get('/mes-favoris', function(req, res) {
 });
 
 app.get('/annonce/:id', function(req, res){
-  var ad = ads[req.params.id];
-  var title = ad.title;
-  var textarea = ad.textarea;
-  var price = ad.price;
-  var photo = ad.photo;
-  var city = ad.city;
-  var pseudo = ad.pseudo;
-  var email = ad.email;
-  var tel = ad.tel;
+
   var isFavors;
   if (favors[req.params.id]) {
     isFavors = true;
   } else {
     isFavors = false;
   }
-  res.render('showAd', {
+  Product.find({_id: req.params.id}, function(err, product){
+    if (!err) {
+      res.render('showAd', {
+        product: product[0],
+        alreadyFav: isFavors
+      });
+    }
+  })
+});
+
+app.get('/modifier/:id', function(req, res) {
+  Product.find({_id: req.params.id}, function(err, product) {
+    res.render('modifyProduct', {
+      product: product[0]
+    })
+  });
+});
+
+app.post('/modifier/:id', upload.single("photo_url"), function(req, res) {
+  var title = req.body.title_ad;
+  var textarea = req.body.textarea_ad;
+  var price = req.body.price_ad;
+  var photo = req.file.filename;
+  var city = req.body.city_ad;
+  var pseudo = req.body.pseudo_ad;
+  var email = req.body.email_ad;
+  var tel = req.body.phone_ad;
+
+  var productModify = {
     title: title,
     textarea: textarea,
     price: price,
@@ -94,7 +135,13 @@ app.get('/annonce/:id', function(req, res){
     pseudo: pseudo,
     email: email,
     tel: tel,
-    alreadyFav: isFavors
+    _id: req.params.id
+  }
+  Product.findOneAndUpdate({_id: req.params.id}, productModify, function(err, product) {
+    if (!err) {
+      console.log(product)
+      res.redirect(`/annonce/${req.params.id}`);
+    }
   });
 });
 
