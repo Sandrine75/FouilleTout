@@ -8,11 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/lightslider.min.css">
   <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
   <$- include partials/navbar.ejs $>
+  <$- include partials/navbarMobile.ejs $>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-xs-12 col-md-8">
@@ -21,8 +25,15 @@
               <$=product.title $>
             </h3>
             <div class="contain-img-ad">
-              <img src="/uploads/<$=product.photo$>" alt="image" class="photo-show" style="position: absolute;z-index: 0;">
-              <img src="<$= product.photo $>" alt="photo" class="photo-show" style="z-index:2;position: relative;">
+              <ul id="lightSlider">
+              <$ for (var i = 0; i < product.photo.length; i++ ) { $>
+                <$ if (product.photo[i].includes("http")) { $>
+                  <li data-thumb="<$=product.photo[i]$>"><img class="photo-show" style="object-fit: contain;" src='<$=product.photo[i]$>' alt="photo"></li>
+                <$ } else { $>
+                  <li data-thumb="/uploads/<$=product.photo[i]$>"><img class="photo-show" style="object-fit: contain;" src='/uploads/<$=product.photo[i]$>' alt="photo"></li>
+                <$ } $>
+              <$ } $>
+              </ul>
             </div>
             <div class="contain-pseudo-ad">
               <h4>
@@ -69,14 +80,37 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-8">
+          <iframe
+            width="100%"
+            height="450"
+            frameborder="0" style="border:0;padding: 1em"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDEJywJAIskEpA6ZIj9EmX8KJAN39XQDcg
+              &q=<$= product.city $>>" allowfullscreen>
+          </iframe>
+        </div>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="/js/lightslider.min.js"></script>
     <script>
+      $(document).ready(function() {
+        $("#lightSlider").lightSlider({
+          item: 1,
+          keyPress: true,
+          controls: true,
+          enableTouch:true,
+          gallery: true,
+          enableDrag:true,
+          easing: 'linear',
+          slideEndAnimation: true
+        });
+      });
       $('.click-button').click(function () {
         $('#tel-ad').html('<a href="tel:<$=product.tel.replace(" ", "") $>"><$=product.tel $></a>');
       });

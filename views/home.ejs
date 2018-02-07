@@ -9,22 +9,25 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
   <$- include partials/navbar.ejs $>
+  <$- include partials/navbarMobile.ejs $>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12">
         <ul class="nav nav-tabs" id="allTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">Tout <span class="number-products"><$= products.length $></span></a>
+              <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true"> Tout <span class="number-products"><$= lengthProd $></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="part-tab" data-toggle="tab" href="#particulier" role="tab" aria-controls="part" aria-selected="false">Particulier <span class="number-products"><$= particuliers.length $></span></a>
+              <a class="nav-link" id="part-tab" data-toggle="tab" href="#particulier" role="tab" aria-controls="part" aria-selected="false">Particulier <span class="number-products"><$= lengthPart $></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="pro-tab" data-toggle="tab" href="#professionel" role="tab" aria-controls="professionel" aria-selected="false">Professionels <span class="number-products"><$= professionels.length $></span></a>
+              <a class="nav-link" id="pro-tab" data-toggle="tab" href="#professionel" role="tab" aria-controls="professionel" aria-selected="false">Professionels <span class="number-products"><$= lengthPro $></span></a>
             </li>
           </ul>
           <div class="tab-content" id="allTabContent">
@@ -32,8 +35,13 @@
               <$  products.map(ad  => { $>
                 <div class="contain-all-ad">
                   <div class="contain-image-ad">
-                    <img class="image-ad" src='/uploads/<$=ad.photo$>' alt="photo">
-                    <img src="<$= ad.photo $>" alt="photo" class="image-ad">
+                    <$ if (ad.photo.length > 0) { $>
+                      <$ if (ad.photo[0].includes("http")) { $>
+                        <img class="image-ad" src='<$=ad.photo[0]$>' alt="photo">
+                      <$ } else { $>
+                        <img class="image-ad" src='/uploads/<$=ad.photo[0]$>' alt="photo">
+                      <$ } $>
+                    <$ } $>
                   </div>
                   <div>
                     <a href="/annonce/<$= ad._id$>"><h4 class="h4-title"><$= ad.title $></h4></a>
@@ -42,13 +50,31 @@
                   </div>
                 </div>
               <$ }); $>
+              <div class="col-12">
+                  <ul class="pagination">
+                    <$ for(var i = 1; i <= (Number(queryPage) +1); i++) { $>
+                      <$ if(queryPage == i) { $>
+                        <$ i++ $>
+                      <$ } $>
+                      <li class="page-pagination"><a href="?page=<$=i$>"><$=i$></a></li>
+                    <$ } $>
+                   <$ if (queryPage == undefined ) { $>
+                      <li class="page-pagination"><a href="?page=2">2</a></li>
+                   <$ } $>
+                  </ul>
+                </div>
             </div>
             <div class="tab-pane fade" id="particulier" role="tabpanel" aria-labelledby="part-tab">
               <$  particuliers.map(ad  => { $>
                 <div class="contain-all-ad">
                   <div class="contain-image-ad">
-                    <img class="image-ad" src='/uploads/<$=ad.photo$>' alt="photo">
-                    <img src="<$= ad.photo $>" alt="photo" class="image-ad">
+                    <$ if (ad.photo.length > 0) { $>
+                      <$ if (ad.photo[0].includes("http")) { $>
+                        <img class="image-ad" src='<$=ad.photo[0]$>' alt="photo">
+                      <$ } else { $>
+                        <img class="image-ad" src='/uploads/<$=ad.photo[0]$>' alt="photo">
+                      <$ } $>
+                    <$ } $>
                   </div>
                   <div>
                     <a href="/annonce/<$= ad._id$>"><h4 class="h4-title"><$= ad.title $></h4></a>
@@ -62,9 +88,14 @@
               <$  professionels.map(ad  => { $>
                 <div class="contain-all-ad">
                   <div class="contain-image-ad">
-                    <img class="image-ad" src='/uploads/<$=ad.photo$>' alt="photo">
-                    <img src="<$= ad.photo $>" alt="photo" class="image-ad">
-                  </div>
+                    <$ if (ad.photo.length > 0) { $>
+                      <$ if (ad.photo[0].includes("http")) { $>
+                        <img class="image-ad" src='<$=ad.photo[0]$>' alt="photo">
+                      <$ } else { $>
+                        <img class="image-ad" src='/uploads/<$=ad.photo[0]$>' alt="photo">
+                      <$ } $>
+                    <$ } $>
+                    </div>
                   <div>
                     <a href="/annonce/<$= ad._id$>"><h4 class="h4-title"><$= ad.title $></h4></a>
                     <p class="p-city"><$= ad.city$></p>
@@ -77,12 +108,15 @@
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+    <script>
+    $('#all-tab').click(function(){
+      window.location.replace("/")
+    });
+    </script>
 </body>
 
 </html>

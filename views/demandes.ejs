@@ -9,18 +9,25 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
   <$- include partials/navbar.ejs $>
+  <$- include partials/navbarMobile.ejs $>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12">
+        <h4>Demandes</h4>
       <$  demandes.map((ad, i) => { $>
         <div class="contain-all-ad">
           <div class="contain-image-ad">
-            <img class="image-ad" src='/uploads/<$=ad.photo$>' alt="photo" style="position: absolute;z-index: 0;">
-            <img src="<$= ad.photo $>" alt="photo" class="image-ad" style="z-index:2;position: relative;">
+              <$ if (ad.photo[0].includes("http")) { $>
+                <img class="image-ad" src='<$=ad.photo[0]$>' alt="photo">
+              <$ } else { $>
+                <img class="image-ad" src='/uploads/<$=ad.photo[0]$>' alt="photo">
+              <$ } $>
           </div>
           <div>
             <a href="/annonce/<$= ad._id$>"><h4 class="h4-title"><$= ad.title $></h4></a>
@@ -29,11 +36,36 @@
           </div>
         </div>
         <$ }); $>
+        <$ if (demandes.length >= 10) { $>
+          <div class="contain-all-ad">
+              <div class="contain-image-ad">
+                <img style="width: 100%" src='https://www.lereacteur.io/static/images/logos/lereacteur_purple.png' alt="photo">
+              </div>
+              <div style="display: flex;flex-direction: column;">
+                <a href="https://www.lereacteur.io"><h4 class="h4-title">Le réacteur</h4></a>
+                <p class="p-city" style="width:400px">REPOUSSEZ VOS LIMITES
+                    Débutant ou confirmé, nous vous proposons un enseignement adapté à votre profil.
+                    Apprenez à coder, en vous entourant des meilleurs !</p>
+                <p class="p-price">Nous contacter</p>
+              </div>
+          </div>
+          <$ } $>
+        <div class="col-12">
+          <ul class="pagination">
+              <$ for(var i = 1; i <= (Number(queryPage) +1); i++) { $>
+                <$ if(queryPage == i) { $>
+                  <$ i++ $>
+                <$ } $>
+                <li class="page-pagination"><a href="?page=<$=i$>"><$=i$></a></li>
+              <$ } $>
+              <$ if (queryPage == undefined ) { $>
+                <li class="page-pagination"><a href="?page=2">2</a></li>
+              <$ } $>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"

@@ -1,0 +1,31 @@
+<div class="button_container" id="toggle">
+    <span class="top"></span>
+    <span class="middle"></span>
+    <span class="bottom"></span>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <nav class="overlay-menu">
+      <ul style="display:inline-block">
+        <li>
+          <a class="link-navbar" href="/deposer">Déposer une annonce</a>
+        </li>
+        <li>
+          <a class="link-navbar" href="/annonces/offres">Offres</a>
+        </li>
+        <li>
+          <a class="link-navbar" href="/annonces/demandes">Demandes</a>
+        </li>
+        <li>
+            <a class="link-navbar" href="/mes-favoris">Mes favoris</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <script>
+  $("#toggle").click(function() {
+      $(this).toggleClass("active");
+      $("#overlay").toggleClass("open");
+  });
+  </script>

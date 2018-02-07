@@ -19,7 +19,7 @@ var productSchema = new mongoose.Schema({
   title: String,
   textarea: String,
   price: Number,
-  photo: String,
+  photo: Array,
   city: String,
   pseudo: String,
   email: String,
@@ -53,12 +53,31 @@ function addFixtures() {
     }
   });
 }
-
-var times = 10;
-for(var i=0; i < times; i++){
-    addFixtures();
+function addFixturesProDeman() {
+  var addToDb = new Product({
+    title: faker.commerce.productName(),
+    textarea: faker.lorem.paragraph(),
+    price: faker.commerce.price(),
+    photo: "http://via.placeholder.com/640x480",
+    city: faker.address.city(),
+    pseudo: faker.name.firstName(),
+    email: faker.internet.email(),
+    tel: faker.phone.phoneNumber(),
+    type: "Demandes",
+    type_user: "Professionel"
+  });
+  addToDb.save(function(err, obj) {
+    if (!err) {
+      console.log("1 fixture saved");
+    }
+  });
 }
 
+var times = 30;
+for (var i = 0; i < times; i++) {
+  addFixtures();
+  addFixturesProDeman();
+}
 
 // Express
 app.set("view engine", "ejs");
@@ -67,14 +86,34 @@ app.use(express.static("public"));
 
 // Routes
 app.get("/", function(req, res) {
-  Product.find({}, function(err, product) {
-    Product.find({type_user: "Particulier"}, function(err, particuliers) {
-      Product.find({type_user: "Professionel"}, function(err, professionels) {
-        res.render("home", {
-          products: product,
-          particuliers: particuliers,
-          professionels: professionels
-        });
+  var limit = 10;
+  Product.count({}, function(err, count) {
+    Product.count({ type_user: "Particulier" }, function(err, countPart) {
+      Product.count({ type_user: "Professionel" }, function(err, countPro) {
+        Product.find({}, function(err, product) {
+          Product.find({ type_user: "Particulier" }, function(
+            err,
+            particuliers
+          ) {
+            Product.find({ type_user: "Professionel" }, function(
+              err,
+              professionels
+            ) {
+              res.render("home", {
+                products: product,
+                particuliers: particuliers,
+                professionels: professionels,
+                lengthProd: count,
+                lengthPart: countPart,
+                lengthPro: countPro,
+                queryPage: req.query.page
+              });
+            });
+          });
+        })
+          .limit(limit)
+          .skip(Number(req.query.page) * limit - limit)
+          .sort({"_id": -1});
       });
     });
   });
@@ -84,11 +123,11 @@ app.get("/deposer", function(req, res) {
   res.render("formAdd");
 });
 
-app.post("/deposer", upload.single("photo_url"), function(req, res) {
+app.post("/deposer", upload.array("photo_url[]", 4), function(req, res) {
   var title = req.body.title_ad;
   var textarea = req.body.textarea_ad;
   var price = req.body.price_ad;
-  var photo = req.file.filename;
+  var photo = req.files;
   var city = req.body.city_ad;
   var pseudo = req.body.pseudo_ad;
   var email = req.body.email_ad;
@@ -100,7 +139,6 @@ app.post("/deposer", upload.single("photo_url"), function(req, res) {
     title: title,
     textarea: textarea,
     price: price,
-    photo: photo,
     city: city,
     pseudo: pseudo,
     email: email,
@@ -108,6 +146,13 @@ app.post("/deposer", upload.single("photo_url"), function(req, res) {
     type: type,
     type_user: type_user
   });
+
+  if (photo.length > 0) {
+    ad.photo = [];
+    for (var i = 0; i < photo.length; i++) {
+      ad.photo.push(photo[i].filename);
+    }
+  }
 
   ad.save(function(err, obj) {
     if (!err) {
@@ -126,26 +171,32 @@ app.get("/annonce/:id", function(req, res) {
   });
 });
 
-app.get("/annonces/demandes", function(req, res){
-  Product.find({type: "Demandes"}, function(err, obj) {
+app.get("/annonces/demandes", function(req, res) {
+  Product.find({ type: "Demandes" }, function(err, obj) {
     res.render("demandes", {
-      demandes: obj
-    })
-  });
-});
-
-app.get("/annonces/offres", function(req, res){
-  Product.find({type: "Offres"}, function(err, obj) {
-    res.render("offres", {
-      offres: obj
-    })
-  });
-});
-
-app.get('/mes-favoris', function(req, res) {
-  res.render('favoris', {
-    favors: [{a: 1}, {b: 2}]
+      demandes: obj,
+      queryPage: req.query.page
+    });
   })
+    .limit(10)
+    .skip(Number(req.query.page) * 10 - 10);
+});
+
+app.get("/annonces/offres", function(req, res) {
+  Product.find({ type: "Offres" }, function(err, obj) {
+    res.render("offres", {
+      offres: obj,
+      queryPage: req.query.page
+    });
+  })
+    .limit(10)
+    .skip(Number(req.query.page) * 10 - 10);
+});
+
+app.get("/mes-favoris", function(req, res) {
+  res.render("favoris", {
+    favors: [{ a: 1 }, { b: 2 }]
+  });
 });
 
 app.get("/modifier/:id", function(req, res) {
@@ -156,7 +207,7 @@ app.get("/modifier/:id", function(req, res) {
   });
 });
 
-app.post("/modifier/:id", upload.single("photo_url"), function(req, res) {
+app.post("/modifier/:id", upload.array("photo_url[]", 4), function(req, res) {
   var title = req.body.title_ad;
   var textarea = req.body.textarea_ad;
   var price = req.body.price_ad;
@@ -175,8 +226,11 @@ app.post("/modifier/:id", upload.single("photo_url"), function(req, res) {
     tel: tel
   };
 
-  if (req.file) {
-    productModify.photo = req.file.filename;
+  if (req.files.length > 0) {
+    productModify.photo = [];
+    for (var i = 0; i < req.files.length; i++) {
+      productModify.photo.push(req.files[i].filename);
+    }
   }
 
   Product.findOneAndUpdate({ _id: req.params.id }, productModify, function(
