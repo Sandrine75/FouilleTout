@@ -9,6 +9,8 @@ var bodyParser = require("body-parser");
 var multer = require("multer");
 var mongoose = require("mongoose");
 var faker = require("faker");
+var flash = require('express-flash-messages')
+
 require('dotenv').config()
 
 // MULTER
@@ -101,6 +103,8 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash())
+
 
 passport.use(new LocalStrategy(User.authenticate()));
 
@@ -179,6 +183,7 @@ app.get("/deposer", function(req, res) {
       user: req.user
     });
   } else {
+    req.flash('notify', 'This is a test notification.')
     res.redirect("/login");
   }
 });
