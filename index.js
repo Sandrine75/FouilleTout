@@ -112,7 +112,7 @@ passport.use(
     {
       clientID: "120171218736754",
       clientSecret: "b5a991bd02a38c37a7650d4a8095cdcb",
-      callbackURL: "http://localhost:3030/auth/facebook/callback",
+      callbackURL: "https://leboncoinlyor.herokuapp.com/auth/facebook/callback",
       profileFields: ["id", "displayName", "photos", "email"]
     },
     function(accessToken, refreshToken, profile, cb) {
