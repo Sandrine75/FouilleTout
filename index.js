@@ -112,15 +112,16 @@ passport.use(
     {
       clientID: "120171218736754",
       clientSecret: "b5a991bd02a38c37a7650d4a8095cdcb",
-      callbackURL: "https://leboncoinlyor.herokuapp.com/auth/facebook/callback",
-      profileFields: ["id", "displayName", "photos", "email"]
+      callbackURL: process.env.FACEBOOK_CALLBACK || "http://localhost:3030/auth/facebook/callback",
+      profileFields: ["id", "displayName", "email"]
     },
     function(accessToken, refreshToken, profile, cb) {
       User.findOne({ facebookID: profile.id }, function(err, user) {
         if (!user) {
           var user = new User({
             username: profile.displayName,
-            facebookID: profile.id
+            facebookID: profile.id,
+            email: profile.emails[0].value
           });
           user.save(function(err) {
             if (!err) {
@@ -435,7 +436,9 @@ app.get("/logout", function(req, res) {
   res.redirect("/");
 });
 
-app.get("/auth/facebook", passport.authenticate("facebook"));
+app.get("/auth/facebook", passport.authenticate("facebook", {
+  scope: ['user_friends', 'email', 'public_profile']
+}));
 
 app.get(
   "/auth/facebook/callback",
