@@ -20,7 +20,7 @@ ejs.delimiter = "$";
 var app = express();
 
 // MongoDB PRODUCT
-mongoose.connect("mongodb://localhost:27017/leboncoin");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/leboncoin");
 var productSchema = new mongoose.Schema({
   title: String,
   textarea: String,
