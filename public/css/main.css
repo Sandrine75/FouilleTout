@@ -173,13 +173,15 @@ textarea {
   color: white;
 }
 
-input:focus:invalid, textarea:focus:invalid {
-  border-color: #DD2C00;
+input:focus:invalid,
+textarea:focus:invalid {
+  border-color: #dd2c00;
 }
 
-input:focus, textarea:invalid {
-  outline: none!important;
-  box-shadow: none!important;
+input:focus,
+textarea:invalid {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .input-radio {
@@ -207,7 +209,10 @@ label {
   margin: 20px auto;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active, .nav-link:hover, .nav-link:focus {
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active,
+.nav-link:hover,
+.nav-link:focus {
   color: #f56b2a;
 }
 
@@ -235,9 +240,8 @@ li {
   margin: 0 10px;
 }
 
-
 div.contain-img-ad > div > ul > li > a > img {
-  height: 80px!important;
+  height: 80px !important;
   width: 80px;
   object-fit: cover;
   margin: 0;
@@ -246,7 +250,7 @@ div.contain-img-ad > div > ul > li > a > img {
 .lSSlideOuter .lSPager.lSGallery {
   display: flex;
   justify-content: space-around;
-  width: 100%!important;
+  width: 100% !important;
 }
 
 .page-pagination > a {
@@ -259,7 +263,7 @@ div.contain-img-ad > div > ul > li > a > img {
 }
 
 div.contain-img-ad > div > ul > li {
-  width: auto!important;
+  width: auto !important;
 }
 
 /* Navbar Mobile */
@@ -272,33 +276,33 @@ div.contain-img-ad > div > ul > li {
   width: 35px;
   cursor: pointer;
   z-index: 100;
-  -webkit-transition: opacity .25s ease;
-  transition: opacity .25s ease;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
 }
 
 .button_container:hover {
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .button_container.active .top {
   -webkit-transform: translateY(10px) translateX(0) rotate(45deg);
   transform: translateY(10px) translateX(0) rotate(45deg);
-  background: #FFF;
+  background: #fff;
 }
 
 .button_container.active .middle {
   opacity: 0;
-  background: #FFF;
+  background: #fff;
 }
 
 .button_container.active .bottom {
   -webkit-transform: translateY(-10px) translateX(0) rotate(-45deg);
   transform: translateY(-10px) translateX(0) rotate(-45deg);
-  background: #FFF;
+  background: #fff;
 }
 
 .button_container span {
-  background: #FFF;
+  background: #fff;
   border-radius: 50px;
   border: none;
   height: 5px;
@@ -306,8 +310,8 @@ div.contain-img-ad > div > ul > li {
   position: absolute;
   top: 0px;
   left: 0;
-  -webkit-transition: all .35s ease;
-  transition: all .35s ease;
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
   cursor: pointer;
 }
 
@@ -327,33 +331,33 @@ div.contain-img-ad > div > ul > li {
   height: 100%;
   opacity: 1;
   visibility: hidden;
-  -webkit-transition: opacity .35s, visibility .35s, width .35s;
-  transition: opacity .35s, visibility .35s, width .35s;
+  -webkit-transition: opacity 0.35s, visibility 0.35s, width 0.35s;
+  transition: opacity 0.35s, visibility 0.35s, width 0.35s;
   z-index: 50;
 }
 
 .overlay:before {
-  content: '';
-  background: #1E1E1E;
+  content: "";
+  background: #1e1e1e;
   left: -55%;
   top: 0;
   width: 50%;
   height: 100%;
   position: absolute;
-  -webkit-transition: left .35s ease;
-  transition: left .35s ease;
+  -webkit-transition: left 0.35s ease;
+  transition: left 0.35s ease;
 }
 
 .overlay:after {
-  content: '';
-  background: #1E1E1E;
+  content: "";
+  background: #1e1e1e;
   right: -55%;
   top: 0;
   width: 50%;
   height: 100%;
   position: absolute;
-  -webkit-transition: all .35s ease;
-  transition: all .35s ease;
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
 }
 
 .overlay.open {
@@ -371,25 +375,25 @@ div.contain-img-ad > div > ul > li {
 }
 
 .overlay.open li {
-  -webkit-animation: fadeInRight .5s ease forwards;
-  animation: fadeInRight .5s ease forwards;
-  -webkit-animation-delay: .35s;
-  animation-delay: .35s;
+  -webkit-animation: fadeInRight 0.5s ease forwards;
+  animation: fadeInRight 0.5s ease forwards;
+  -webkit-animation-delay: 0.35s;
+  animation-delay: 0.35s;
 }
 
 .overlay.open li:nth-of-type(2) {
-  -webkit-animation-delay: .45s;
-  animation-delay: .45s;
+  -webkit-animation-delay: 0.45s;
+  animation-delay: 0.45s;
 }
 
 .overlay.open li:nth-of-type(3) {
-  -webkit-animation-delay: .55s;
-  animation-delay: .55s;
+  -webkit-animation-delay: 0.55s;
+  animation-delay: 0.55s;
 }
 
 .overlay.open li:nth-of-type(4) {
-  -webkit-animation-delay: .65s;
-  animation-delay: .65s;
+  -webkit-animation-delay: 0.65s;
+  animation-delay: 0.65s;
 }
 
 .overlay nav {
@@ -399,7 +403,7 @@ div.contain-img-ad > div > ul > li {
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   font-size: 50px;
-  font-family: 'Vollkorn', serif;
+  font-family: "Vollkorn", serif;
   font-weight: 400;
   text-align: center;
   z-index: 100;
@@ -430,7 +434,7 @@ div.contain-img-ad > div > ul > li {
   position: relative;
   font-family: "Montserrat", sans-serif;
   font-size: 2.6rem;
-  color: #FFF;
+  color: #fff;
   text-decoration: none;
   overflow: hidden;
 }
@@ -442,7 +446,7 @@ div.contain-img-ad > div > ul > li {
 }
 
 .overlay ul li a:after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -453,8 +457,8 @@ div.contain-img-ad > div > ul > li {
   height: 7rem;
   z-index: -1;
   background: #f56b2a;
-  -webkit-transition: .35s;
-  transition: .35s;
+  -webkit-transition: 0.35s;
+  transition: 0.35s;
 }
 
 @-webkit-keyframes fadeInRight {
@@ -486,4 +490,48 @@ div.contain-img-ad > div > ul > li {
   .link-navbar {
     display: none;
   }
+}
+
+#username:focus,
+#password:focus {
+  box-shadow: 0.05rem 0.25rem 0.3rem rgba(143, 61, 136, 0.2),
+    inset 0.15rem 0.25rem 0.5rem rgba(252, 254, 231, 0.4),
+    inset -0.15rem -0.25rem 0.5rem rgba(143, 61, 136, 0.4),
+    -0.2rem -0.3rem 0.6rem rgba(252, 254, 231, 0.1),
+    0.2rem 0.3rem 0.6rem rgba(218, 11, 98, 0.1) !important;
+  transform: scale(1.05) !important;
+}
+
+.nav-leboncoin-dis {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.label-for-button {
+  position: absolute!important;
+  top: 5px!important;
+  padding: 0px!important;
+  margin: 0px!important;
+  height: initial!important;
+  text-align: center!important;
+  font-size: 1rem!important;
+  line-height: inherit!important;
+  font-weight: 500!important;
+}
+
+.input-submit-login {
+  padding: 5px!important;
+  width: 100%;
+  margin: 0!important;
+  margin-bottom: 17px!important;
+  border-radius: 0.25rem!important;
+  position: relative!important;
+  border: 1px solid #b64c1d!important;
+}
+
+.contain-submit-login {
+  width: 50%;
+  margin: 0 auto;
+  display: flex!important;
 }

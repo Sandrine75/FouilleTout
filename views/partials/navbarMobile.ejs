@@ -7,6 +7,12 @@
   <div class="overlay" id="overlay">
     <nav class="overlay-menu">
       <ul style="display:inline-block">
+          <$ if (user) { $>
+           <li><a class="link-navbar" href="/logout">Logout</a></li>
+            <$ } else { $>
+             <li><a class="link-navbar" href='/login'>Login</a></li>
+              <li><a class="link-navbar" href='/register'>Register</a></li>
+              <$ } $>
         <li>
           <a class="link-navbar" href="/deposer">Déposer une annonce</a>
         </li>
