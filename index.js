@@ -9,6 +9,7 @@ var bodyParser = require("body-parser");
 var multer = require("multer");
 var mongoose = require("mongoose");
 var faker = require("faker");
+require('dotenv').config()
 
 // MULTER
 var upload = multer({ dest: "public/uploads/" });
@@ -20,7 +21,7 @@ ejs.delimiter = "$";
 var app = express();
 
 // MongoDB PRODUCT
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/leboncoin");
+mongoose.connect(process.env.MONGODB_URI);
 var productSchema = new mongoose.Schema({
   title: String,
   textarea: String,
@@ -110,9 +111,9 @@ passport.deserializeUser(User.deserializeUser()); // JSON.parse
 passport.use(
   new FacebookStrategy(
     {
-      clientID: "120171218736754",
-      clientSecret: "b5a991bd02a38c37a7650d4a8095cdcb",
-      callbackURL: process.env.FACEBOOK_CALLBACK || "http://localhost:3030/auth/facebook/callback",
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: process.env.FACEBOOK_CALLBACK,
       profileFields: ["id", "displayName", "email"]
     },
     function(accessToken, refreshToken, profile, cb) {
@@ -455,6 +456,6 @@ app.get("*", function(req, res) {
 });
 
 // Routes Listen
-app.listen(process.env.PORT || 3030, function() {
+app.listen(process.env.PORT, function() {
   console.log("Server is listening...");
 });
